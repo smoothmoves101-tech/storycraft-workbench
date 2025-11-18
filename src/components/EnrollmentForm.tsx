@@ -57,7 +57,7 @@ const EnrollmentForm = ({ onEnroll }: EnrollmentFormProps) => {
             Enroll in Creating Powerful Short Stories
           </h1>
           <p className="text-muted-foreground text-lg">
-            Start your 6-week journey with DeMarcus Walker
+            Start your 6-week journey with Demarcus Walker
           </p>
         </div>
 
