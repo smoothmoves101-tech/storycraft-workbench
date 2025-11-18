@@ -1,6 +1,23 @@
+import { useState } from "react";
 import CourseWeek from "@/components/CourseWeek";
+import EnrollmentForm from "@/components/EnrollmentForm";
 
 const Index = () => {
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [studentData, setStudentData] = useState<{
+    name: string;
+    email: string;
+    experience: string;
+  } | null>(null);
+
+  const handleEnrollment = (data: { name: string; email: string; experience: string }) => {
+    setStudentData(data);
+    setIsEnrolled(true);
+  };
+
+  if (!isEnrolled) {
+    return <EnrollmentForm onEnroll={handleEnrollment} />;
+  }
   const courseWeeks = [
     {
       weekNumber: 1,
