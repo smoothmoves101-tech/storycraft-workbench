@@ -147,7 +147,7 @@ const Index = () => {
             </p>
             <div className="flex items-center gap-2 text-lg">
               <span className="text-primary-foreground/80">Instructor:</span>
-              <span className="font-semibold">DeMarcus Walker</span>
+              <span className="font-semibold">Demarcus Walker</span>
             </div>
           </div>
         </div>
