@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -6,6 +7,8 @@ import {
 } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Upload, FileCheck } from "lucide-react";
 
 interface WeekData {
   weekNumber: number;
@@ -22,6 +25,15 @@ interface CourseWeekProps {
 }
 
 const CourseWeek = ({ week }: CourseWeekProps) => {
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setUploadedFile(file);
+    }
+  };
+
   return (
     <Card className="overflow-hidden border-border shadow-[var(--shadow-medium)] hover:shadow-[var(--shadow-large)] transition-shadow duration-300">
       <Accordion type="single" collapsible className="w-full">
@@ -86,7 +98,39 @@ const CourseWeek = ({ week }: CourseWeekProps) => {
                 <h4 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
                   <span className="text-accent">📝</span> Homework
                 </h4>
-                <p className="text-muted-foreground">{week.homework}</p>
+                <p className="text-muted-foreground mb-4">{week.homework}</p>
+                
+                {/* File Upload Section */}
+                <div className="mt-4 pt-4 border-t border-border">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <input
+                      type="file"
+                      id={`file-upload-${week.weekNumber}`}
+                      className="hidden"
+                      onChange={handleFileUpload}
+                      accept=".pdf,.doc,.docx,.txt"
+                    />
+                    <label htmlFor={`file-upload-${week.weekNumber}`}>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="cursor-pointer"
+                        asChild
+                      >
+                        <span className="flex items-center gap-2">
+                          <Upload className="w-4 h-4" />
+                          Turn In Assignment
+                        </span>
+                      </Button>
+                    </label>
+                    {uploadedFile && (
+                      <div className="flex items-center gap-2 text-sm text-foreground bg-accent/10 px-3 py-2 rounded-md border border-accent/20">
+                        <FileCheck className="w-4 h-4 text-accent" />
+                        <span>{uploadedFile.name}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* Final Deliverable (Week 6 only) */}
