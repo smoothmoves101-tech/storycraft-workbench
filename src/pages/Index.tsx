@@ -145,9 +145,19 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-primary-foreground/90 mb-6">
               A 6-Week Intensive Course in Story Development & Scriptwriting
             </p>
-            <div className="flex items-center gap-2 text-lg">
-              <span className="text-primary-foreground/80">Instructor:</span>
-              <span className="font-semibold">Demarcus Walker</span>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-lg">
+                <span className="text-primary-foreground/80">Instructor:</span>
+                <span className="font-semibold">Demarcus Walker</span>
+              </div>
+              <div className="flex items-center gap-2 text-lg">
+                <span className="text-primary-foreground/80">Location:</span>
+                <span className="font-semibold">In Person</span>
+              </div>
+              <div className="flex items-center gap-2 text-lg">
+                <span className="text-primary-foreground/80">Date & Time:</span>
+                <span className="font-semibold">TBA (To Be Announced)</span>
+              </div>
             </div>
           </div>
         </div>
