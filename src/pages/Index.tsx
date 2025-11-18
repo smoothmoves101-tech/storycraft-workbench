@@ -1,6 +1,8 @@
 import { useState } from "react";
 import CourseWeek from "@/components/CourseWeek";
 import EnrollmentForm from "@/components/EnrollmentForm";
+import ContactForm from "@/components/ContactForm";
+import NotificationSignup from "@/components/NotificationSignup";
 
 const Index = () => {
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -10,12 +12,14 @@ const Index = () => {
     experience: string;
   } | null>(null);
 
+  const enrollmentOpen = (import.meta.env.VITE_ENROLLMENT_OPEN as string | undefined) === "true";
+
   const handleEnrollment = (data: { name: string; email: string; experience: string }) => {
     setStudentData(data);
     setIsEnrolled(true);
   };
 
-  if (!isEnrolled) {
+  if (enrollmentOpen && !isEnrolled) {
     return <EnrollmentForm onEnroll={handleEnrollment} />;
   }
   const courseWeeks = [
@@ -162,6 +166,14 @@ const Index = () => {
           </div>
         </div>
       </header>
+
+      {/* Interest & Notifications */}
+      <section className="container mx-auto px-6 py-10">
+        <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+          <ContactForm />
+          <NotificationSignup />
+        </div>
+      </section>
 
       {/* Course Overview */}
       <section className="container mx-auto px-6 py-16">

@@ -71,3 +71,66 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+---
+
+## Contact & Notification Features
+
+This app now includes:
+
+- Contact form for students to inquire or express interest before enrollment opens.
+- Notification signup to subscribe for updates when the date and time are announced.
+
+### Toggle Enrollment Flow
+
+Set the following environment variable to control whether the enrollment form is shown:
+
+- `VITE_ENROLLMENT_OPEN` = `true` to show the enrollment form
+- `VITE_ENROLLMENT_OPEN` = `false` (or unset) to show the course page with contact + notification forms
+
+Add to `.env`:
+
+```
+VITE_ENROLLMENT_OPEN=false
+```
+
+### Optional Supabase Integration
+
+If you want inquiries and signups to be stored, configure Supabase:
+
+Add to `.env`:
+
+```
+VITE_SUPABASE_URL=<your-supabase-url>
+VITE_SUPABASE_PUBLISHABLE_KEY=<your-supabase-anon-key>
+```
+
+Create two tables in your Supabase project:
+
+```sql
+-- Inquiries from the contact form
+create table if not exists public.inquiries (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text not null,
+  message text not null,
+  created_at timestamptz not null default now()
+);
+
+-- Notification signups
+create table if not exists public.interest_signups (
+  id uuid primary key default gen_random_uuid(),
+  name text null,
+  email text not null,
+  created_at timestamptz not null default now()
+);
+
+-- Basic RLS example (adjust to your needs)
+alter table public.inquiries enable row level security;
+create policy "Allow inserts" on public.inquiries for insert using (true);
+
+alter table public.interest_signups enable row level security;
+create policy "Allow inserts" on public.interest_signups for insert using (true);
+```
+
+The Supabase client is available at `@/integrations/supabase/client`. The forms will insert into these tables and show toast feedback.
